@@ -1,0 +1,41 @@
+@(listPost: List[Post])
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Posts</title>
+        <style>table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }</style>
+    </head>
+    <body>
+        <a href="logout" style="float: right">Logout</a>
+        <table style="width: 60%">
+            <tr>
+                <th>Category</th>
+                <th>title</th>
+                <th>content</th>
+            </tr>
+            @for(post <- listPost) {
+                <tr>
+                    <td>@post.category</td>
+                    <td><a href="post/@post.id">@post.title</a></td>
+                    <td>@post.content</td>
+                </tr>
+            }
+        </table>
+    </body>
+</html>

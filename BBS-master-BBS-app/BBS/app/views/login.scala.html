@@ -1,0 +1,99 @@
+@import helper._
+
+@(userLoginForm: Form[UserLoginForm])(implicit request: RequestHeader, messagesProvider: MessagesProvider, flash: Flash)
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+        <style>
+                body {
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+
+                * {
+                    box-sizing: border-box;
+                }
+
+                /* style the container */
+                .container {
+                    position: relative;
+                    border-radius: 5px;
+                    background-color: #f2f2f2;
+                    padding: 20px 0 30px 0;
+                }
+
+                /* style inputs and link buttons */
+                input,
+                .btn {
+                    width: 100%;
+                    padding: 12px;
+                    border: none;
+                    border-radius: 4px;
+                    margin: 5px 0;
+                    opacity: 0.85;
+                    display: inline-block;
+                    font-size: 17px;
+                    line-height: 20px;
+                    text-decoration: none; /* remove underline from anchors */
+                }
+
+                input:hover,
+                .btn:hover {
+                    opacity: 1;
+                }
+                /* style the submit button */
+                input[type=submit] {
+                    background-color: #4CAF50;
+                    color: white;
+                    cursor: pointer;
+                }
+
+                input[type=submit]:hover {
+                    background-color: #45a049;
+                }
+
+                /* Two-column layout */
+                .col {
+                    float: left;
+                    width: 50%;
+                    margin: auto;
+                    padding: 0 50px;
+                    margin-top: 6px;
+                }
+
+                /* Clear floats after the columns */
+                .row:after {
+                    content: "";
+                    display: table;
+                    clear: both;
+                }
+                .error {
+                    color: red;
+                }
+        </style>
+    </head>
+    <body>
+        <h2 style="text-align: center">User Login</h2>
+        <div class="container">
+            <div class="row">
+
+                <div class="col">
+                    <i class="error"> @flash.get("error").getOrElse("")</i>
+                    <ul>
+                    @userLoginForm.errors.map{error =>
+                        <li><i class="error">@error.format</i></li>
+                    }
+                    </ul>
+                    @helper.form(routes.AuthenticatedUserController.login()) {
+                        <input type="text" placeholder="Email" id="@{userLoginForm("email").id}" name="@{userLoginForm("email").label}" value="@{userLoginForm("email").value}" required maxlength="40">
+                        <input type="password" placeholder="Password" id="@{userLoginForm("password").id}" name="@{userLoginForm("password").label}" value="@{userLoginForm("password").value}" minlength="8" maxlength="50">
+                        <input type="submit" value="Login">
+                        }
+                </div>
+
+            </div>
+        </div>
+    </body>
